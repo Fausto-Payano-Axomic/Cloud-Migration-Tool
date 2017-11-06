@@ -3,10 +3,16 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Cloud_Migration_Tool"
+        xmlns:local="clr-namespace:Cloud_Migration_Tool.ViewModels"
         mc:Ignorable="d"
-        Title="MainWindow" Height="500" Width="825"
-        FontSize="12">
+        Title="Cloud Migration Tool" Height="500" Width="825"
+        xmlns:md="https://github.com/fantasticfiasco/mvvm-dialogs"
+        md:DialogServiceViews.IsRegistered="True"
+        FontSize="12"
+        WindowStartupLocation="CenterOwner"
+        DataContext="{Binding Source={StaticResource Locator}, Path=MainWindow}"
+        
+        >
 
     <DockPanel>
         <Menu DockPanel.Dock="Top">
@@ -35,19 +41,24 @@
                      Width="256" 
                      Grid.Column="1"
                      MaxHeight="20"
-                     IsReadOnly="True"/>
+                     IsReadOnly="True"
+                     />
             <Button Content="Browse..." Grid.Column="1" HorizontalAlignment="Left" Margin="266,14,0,0" VerticalAlignment="Top" Width="103" Height="22"/>
             <TextBox HorizontalAlignment="Left" 
                 Margin="5,64,0,125" 
                 Opacity=".2"  
                 TextWrapping="Wrap" 
-                Text="Path to Projects To Be Migrated CSV..."  
+                Text="Path to Files To Be Migrated CSV..."  
                 Width="256" 
                 Grid.Column="1"
                 MaxHeight="20"
                 IsReadOnly="True"/>
             <Label Margin ="22,70,10,124" Content="Files To Be Migrated CSV:"/>
-            <Button Content="Browse..." Grid.Column="1" HorizontalAlignment="Left" Margin="266,70,0,0" VerticalAlignment="Top" Width="103" Height="22"/>
+            <Button Content="Browse..." Grid.Column="1" 
+                    HorizontalAlignment="Left" Margin="266,70,0,0"
+                    VerticalAlignment="Top" Width="103" 
+                    Height="22" 
+                    />
 
         </Grid>
     </DockPanel>
