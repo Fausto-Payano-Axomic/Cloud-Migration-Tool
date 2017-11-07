@@ -6,13 +6,13 @@
         xmlns:local="clr-namespace:Cloud_Migration_Tool.ViewModels"
         mc:Ignorable="d"
         Title="Cloud Migration Tool" Height="500" Width="825"
-        xmlns:md="https://github.com/fantasticfiasco/mvvm-dialogs"
-        md:DialogServiceViews.IsRegistered="True"
         FontSize="12"
-        WindowStartupLocation="CenterOwner"
-        DataContext="{Binding Source={StaticResource Locator}, Path=MainWindow}"
-        
-        >
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterOwner">
+
+    <Window.DataContext>
+        <local:MigrationViewModel/>
+    </Window.DataContext>
 
     <DockPanel>
         <Menu DockPanel.Dock="Top">
@@ -37,18 +37,21 @@
                      Margin="5,10,0,183" 
                      Opacity=".2"  
                      TextWrapping="Wrap" 
-                     Text="Path to Projects To Be Migrated CSV..."  
+                     Text="{Binding ProjectTextBoxContents}"  
                      Width="256" 
                      Grid.Column="1"
                      MaxHeight="20"
                      IsReadOnly="True"
                      />
-            <Button Content="Browse..." Grid.Column="1" HorizontalAlignment="Left" Margin="266,14,0,0" VerticalAlignment="Top" Width="103" Height="22"/>
+            <Button Content="Browse..." Grid.Column="1" HorizontalAlignment="Left" Margin="266,14,0,0" VerticalAlignment="Top" Width="103" Height="22" Click="Button_Click" Name="ProjectsToBeMigratedButton"
+                   />
+            
+            
             <TextBox HorizontalAlignment="Left" 
                 Margin="5,64,0,125" 
                 Opacity=".2"  
                 TextWrapping="Wrap" 
-                Text="Path to Files To Be Migrated CSV..."  
+                Text="{Binding FileTextBoxContents}"  
                 Width="256" 
                 Grid.Column="1"
                 MaxHeight="20"
@@ -57,7 +60,7 @@
             <Button Content="Browse..." Grid.Column="1" 
                     HorizontalAlignment="Left" Margin="266,70,0,0"
                     VerticalAlignment="Top" Width="103" 
-                    Height="22" 
+                    Height="22" Click="Button_Click" Name="FilesToBeMigratedButton"
                     />
 
         </Grid>

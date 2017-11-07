@@ -75,11 +75,12 @@
     </Compile>
     <Compile Include="Misc\INPC.cs" />
     <Compile Include="Misc\RelayCommand.cs" />
+    <Compile Include="Models\FilesToBeMigrated.cs" />
     <Compile Include="Models\FilesToBeUploaded.cs" />
     <Compile Include="Models\FilesUploaded.cs" />
     <Compile Include="Models\MigrationModel.cs" />
     <Compile Include="Models\ProjectsMigrationModel.cs" />
-    <Compile Include="ViewModelLocator.cs" />
+    <Compile Include="Models\ProjectsToBeMigrated.cs" />
     <Compile Include="ViewModels\MigrationViewModel.cs" />
     <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>

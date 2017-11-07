@@ -6,46 +6,54 @@ namespace Cloud_Migration_Tool.ViewModels
 {
     public class MigrationViewModel : INPC
     {
-        private readonly IDialogService _dialogService;
-        public ICommand OpenFileCommand { get; }
-        private string _path;
-        
         public MigrationViewModel()
         {
 
         }
 
-        public MigrationViewModel(IDialogService dialogService)
-        {
-            this._dialogService = dialogService;
-            OpenFileCommand = new RelayCommand(OpenFile);
-        }
-
-        public string Path {
+        private string _path;
+        private string _projectTextBoxContents = "Path to Project Migration CSV...";
+        private string _fileTextBoxContents = "Path to File Migration CSV...";
+        public String Path {
             get { return _path; }
-            private set { Set(() => Path, ref _path, value); }
+            set {
+                _path = value;
+                RaisePropertyChanged("Path");
+            }
         }
-
-        private void OpenFile()
-        {
-            var settings = new OpenFileDialogSettings
-            {
-                Title = "Pick the CSV File",
-                InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
-                Filter = "CSV Documents (*.csv)|All Files (*.*)|*.*"
-            };
-
-            bool? success = _dialogService.ShowOpenFileDialog(this, settings);
-            if (success == true)
-            {
-                var Path = settings.FileName;
+        public String ProjectTextBoxContents {
+            get { return _projectTextBoxContents; }
+            set {
+                _projectTextBoxContents = value;
+                RaisePropertyChanged("ProjectTextBoxContents");
+            }
+        }
+        public String FileTextBoxContents {
+            get { return _fileTextBoxContents; }
+            set {
+                _fileTextBoxContents = value;
+                RaisePropertyChanged("FileTextBoxContents");
             }
         }
 
 
+        #region CSV Parsing Methods
+
+        private void ParseAndSerializeProjectsToBeMigrated(string filePath)
+        {
+
+        }
+
+        private void ParseAndSerializeFilesToBeMigrated(string filePath)
+        {
+
+        }
+
+
+        #endregion
 
         #region ICommand Related Stuff
-        
+
         private ICommand toggleExecuteCommand { get; set; }
         private bool canExecute = true;
         public bool CanExcute {

@@ -27,7 +27,25 @@ namespace Cloud_Migration_Tool
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            System.Windows.Forms.OpenFileDialog openFile = new System.Windows.Forms.OpenFileDialog()
+            {
+                Filter = "CSV Files (*.csv)|*.csv"
+            };
 
+            
+            
+            if(openFile.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                MessageBox.Show($"You selected {openFile.FileName}");
+                if((sender as Button).Name == "FilesToBeMigratedButton")
+                {
+                    MessageBox.Show("This is a files to be migrated file lookup");
+                }
+                else
+                {
+                    MessageBox.Show("This is a projects to be migrated file lookup");
+                }
+            }
         }
     }
 }
