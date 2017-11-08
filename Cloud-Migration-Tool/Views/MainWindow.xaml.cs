@@ -31,19 +31,16 @@ namespace Cloud_Migration_Tool
             {
                 Filter = "CSV Files (*.csv)|*.csv"
             };
-
-            
-            
             if(openFile.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                MessageBox.Show($"You selected {openFile.FileName}");
+                
                 if((sender as Button).Name == "FilesToBeMigratedButton")
                 {
-                    MessageBox.Show("This is a files to be migrated file lookup");
+                    FileCSVPathTextbox.Text = openFile.FileName;
                 }
                 else
                 {
-                    MessageBox.Show("This is a projects to be migrated file lookup");
+                    ProjectCSVPathTextbox.Text = openFile.FileName;
                 }
             }
         }

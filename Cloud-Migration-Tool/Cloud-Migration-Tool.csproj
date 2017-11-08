@@ -73,14 +73,15 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Helper Classes\Parser.cs" />
     <Compile Include="Misc\INPC.cs" />
     <Compile Include="Misc\RelayCommand.cs" />
-    <Compile Include="Models\FilesToBeMigrated.cs" />
     <Compile Include="Models\FilesToBeUploaded.cs" />
     <Compile Include="Models\FilesUploaded.cs" />
+    <Compile Include="Models\FileToBeMigrated.cs" />
     <Compile Include="Models\MigrationModel.cs" />
     <Compile Include="Models\ProjectsMigrationModel.cs" />
-    <Compile Include="Models\ProjectsToBeMigrated.cs" />
+    <Compile Include="Models\ProjectToBeMigrated.cs" />
     <Compile Include="ViewModels\MigrationViewModel.cs" />
     <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>

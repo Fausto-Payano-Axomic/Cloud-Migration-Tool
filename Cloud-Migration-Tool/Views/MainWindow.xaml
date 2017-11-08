@@ -14,6 +14,8 @@
         <local:MigrationViewModel/>
     </Window.DataContext>
 
+
+
     <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="_File"/>
@@ -33,35 +35,51 @@
             </Grid.ColumnDefinitions>
 
             <Label Margin ="10,11,0,183" Content="Projects To Be Migrated CSV:"/>
+
             <TextBox HorizontalAlignment="Left" 
                      Margin="5,10,0,183" 
-                     Opacity=".2"  
+                     Opacity=".4"  
                      TextWrapping="Wrap" 
-                     Text="{Binding ProjectTextBoxContents}"  
+                     Text="{Binding ProjectTextBoxContents, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  
                      Width="256" 
                      Grid.Column="1"
                      MaxHeight="20"
                      IsReadOnly="True"
+                     Name="ProjectCSVPathTextbox"
+                     FontSize="8"
                      />
             <Button Content="Browse..." Grid.Column="1" HorizontalAlignment="Left" Margin="266,14,0,0" VerticalAlignment="Top" Width="103" Height="22" Click="Button_Click" Name="ProjectsToBeMigratedButton"
                    />
-            
-            
+
+
             <TextBox HorizontalAlignment="Left" 
                 Margin="5,64,0,125" 
-                Opacity=".2"  
+                Opacity=".4"  
                 TextWrapping="Wrap" 
-                Text="{Binding FileTextBoxContents}"  
+                Text="{Binding FileTextBoxContents, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  
                 Width="256" 
                 Grid.Column="1"
                 MaxHeight="20"
-                IsReadOnly="True"/>
+                IsReadOnly="True"
+                Name="FileCSVPathTextbox"
+                FontSize="8"
+                     />
             <Label Margin ="22,70,10,124" Content="Files To Be Migrated CSV:"/>
             <Button Content="Browse..." Grid.Column="1" 
                     HorizontalAlignment="Left" Margin="266,70,0,0"
                     VerticalAlignment="Top" Width="103" 
                     Height="22" Click="Button_Click" Name="FilesToBeMigratedButton"
                     />
+            <Button Content="Parse" Grid.Column="1" HorizontalAlignment="Left" Margin="383,14,0,0" VerticalAlignment="Top" Width="75" Name="ProjectCSVParseButton" Command="{Binding ProjectParseCommand}" Height="22"/>
+            <Button Content="Parse" Grid.Column="1" HorizontalAlignment="Left" Margin="383,70,0,0" VerticalAlignment="Top" Width="75" Name="FileCSVParseButton" Command="{Binding FileParseCommand}" Height="22"/>
+            <ListBox Grid.Column="1" HorizontalAlignment="Left" Height="215" Margin="2,2,0,0" Grid.Row="1" VerticalAlignment="Top" Width="528" Name="FilesToBeMigratedConsole" 
+                     ItemsSource="{Binding FilesToBeMigrated}" BorderThickness="2" BorderBrush="Black" FontFamily="Arial">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding FilePath}"/>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
 
         </Grid>
     </DockPanel>
