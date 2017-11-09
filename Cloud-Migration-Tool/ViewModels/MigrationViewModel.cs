@@ -16,7 +16,8 @@ namespace Cloud_Migration_Tool.ViewModels
 
         public MigrationViewModel()
         {
-            ProjectParseCommand = new RelayCommand((s) => ParseProjectsToBeMigrated(ProjectTextBoxContents));
+            Predicate<object> canExecuteProjectButton = _ => !(ProjectTextBoxContents.Contains("/"));
+            ProjectParseCommand = new RelayCommand((s) => ParseProjectsToBeMigrated(ProjectTextBoxContents),canExecuteProjectButton);
             FileParseCommand = new RelayCommand((s) => ParseFilesToBeMigrated(FileTextBoxContents));
             
         }

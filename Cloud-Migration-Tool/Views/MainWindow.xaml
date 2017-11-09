@@ -8,7 +8,8 @@
         Title="Cloud Migration Tool" Height="500" Width="825"
         FontSize="12"
         ResizeMode="NoResize"
-        WindowStartupLocation="CenterOwner">
+        WindowStartupLocation="CenterOwner" Background="#FFAEAAAA"
+        >
 
     <Window.DataContext>
         <local:MigrationViewModel/>
@@ -17,7 +18,7 @@
 
 
     <DockPanel>
-        <Menu DockPanel.Dock="Top">
+        <Menu DockPanel.Dock="Top" Background="#FFD3CFCF">
             <MenuItem Header="_File"/>
             <MenuItem Header="_About"/>
             <MenuItem Header="_Options"/>
@@ -70,8 +71,8 @@
                     VerticalAlignment="Top" Width="103" 
                     Height="22" Click="Button_Click" Name="FilesToBeMigratedButton"
                     />
-            <Button Content="Parse" Grid.Column="1" HorizontalAlignment="Left" Margin="383,14,0,0" VerticalAlignment="Top" Width="75" Name="ProjectCSVParseButton" Command="{Binding ProjectParseCommand}" Height="22"/>
-            <Button Content="Parse" Grid.Column="1" HorizontalAlignment="Left" Margin="383,70,0,0" VerticalAlignment="Top" Width="75" Name="FileCSVParseButton" Command="{Binding FileParseCommand}" Height="22"/>
+            <Button Content="Parse" Grid.Column="1" HorizontalAlignment="Left" Margin="383,14,0,0" VerticalAlignment="Top" Width="75" Name="ProjectCSVParseButton" Command="{Binding ProjectParseCommand}" Height="22" Background="#FF02A3FF"/>
+            <Button Content="Parse" Grid.Column="1" HorizontalAlignment="Left" Margin="383,70,0,0" VerticalAlignment="Top" Width="75" Name="FileCSVParseButton" Command="{Binding FileParseCommand}" Height="22" Background="#FF00A2FF"/>
             <ListView Grid.Column="1" HorizontalAlignment="Left" Height="215" Margin="2,2,0,0" Grid.Row="1" VerticalAlignment="Top" Width="528" Name="FilesToBeMigratedConsole" 
                      ItemsSource="{Binding FilesToBeMigrated}" BorderThickness="2" BorderBrush="Black" FontFamily="Consolas">
                 <ListView.ItemTemplate>
