@@ -9,6 +9,7 @@ namespace Cloud_Migration_Tool.Models
         private string _sessionKey;
 
 
+
         public string HostAddress {
             get { return _hostAddress; }
             set {

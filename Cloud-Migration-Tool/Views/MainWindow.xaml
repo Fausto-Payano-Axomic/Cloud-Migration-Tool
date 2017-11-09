@@ -72,14 +72,14 @@
                     />
             <Button Content="Parse" Grid.Column="1" HorizontalAlignment="Left" Margin="383,14,0,0" VerticalAlignment="Top" Width="75" Name="ProjectCSVParseButton" Command="{Binding ProjectParseCommand}" Height="22"/>
             <Button Content="Parse" Grid.Column="1" HorizontalAlignment="Left" Margin="383,70,0,0" VerticalAlignment="Top" Width="75" Name="FileCSVParseButton" Command="{Binding FileParseCommand}" Height="22"/>
-            <ListBox Grid.Column="1" HorizontalAlignment="Left" Height="215" Margin="2,2,0,0" Grid.Row="1" VerticalAlignment="Top" Width="528" Name="FilesToBeMigratedConsole" 
-                     ItemsSource="{Binding FilesToBeMigrated}" BorderThickness="2" BorderBrush="Black" FontFamily="Arial">
-                <ListBox.ItemTemplate>
+            <ListView Grid.Column="1" HorizontalAlignment="Left" Height="215" Margin="2,2,0,0" Grid.Row="1" VerticalAlignment="Top" Width="528" Name="FilesToBeMigratedConsole" 
+                     ItemsSource="{Binding FilesToBeMigrated}" BorderThickness="2" BorderBrush="Black" FontFamily="Consolas">
+                <ListView.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding FilePath}"/>
                     </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
+                </ListView.ItemTemplate>
+            </ListView>
 
         </Grid>
     </DockPanel>

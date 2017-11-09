@@ -11,14 +11,14 @@ namespace Cloud_Migration_Tool.ViewModels
 {
     public class MigrationViewModel : INPC
     {
-        TaskFactory taskDelegator;
+        
         
 
         public MigrationViewModel()
         {
             ProjectParseCommand = new RelayCommand((s) => ParseProjectsToBeMigrated(ProjectTextBoxContents));
             FileParseCommand = new RelayCommand((s) => ParseFilesToBeMigrated(FileTextBoxContents));
-            taskDelegator = new TaskFactory(TaskScheduler.FromCurrentSynchronizationContext());
+            
         }
 
 
@@ -82,15 +82,15 @@ namespace Cloud_Migration_Tool.ViewModels
         {
             MessageBox.Show("This feature is not implemented yet.");
         }
-        private void ParseFilesToBeMigrated(string filePath)
+        private async void ParseFilesToBeMigrated(string filePath)
         {
-            //Issue here, when doing it the current way the UI seems to lock up + listbox does not update. Parser also does not seem to run.
+            
             Parser parser = new Parser();
+
+            var result = await Task.Run(() => parser.Parse(filePath));
+            FilesToBeMigrated = new ObservableCollection<FileToBeMigrated>(result);
+
           
-            /*Task task = taskDelegator.StartNew(() => parser.Parse(filePath));
-            var result = task.Result;
-           FilesToBeMigrated = new ObservableCollection<FileToBeMigrated>(result);
-           */
         }
 
 

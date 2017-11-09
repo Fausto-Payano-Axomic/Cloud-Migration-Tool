@@ -73,6 +73,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Helper Classes\FileIntegrityChecker.cs" />
     <Compile Include="Helper Classes\Parser.cs" />
     <Compile Include="Misc\INPC.cs" />
     <Compile Include="Misc\RelayCommand.cs" />
