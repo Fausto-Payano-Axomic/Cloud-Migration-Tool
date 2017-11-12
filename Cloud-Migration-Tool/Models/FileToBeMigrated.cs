@@ -20,6 +20,12 @@ namespace Cloud_Migration_Tool.Models
         [FieldOrder(3)]
         [FieldQuoted('"', QuoteMode.OptionalForBoth)]
         public string Keywords { get; set; }
+
+        public enum FileIntegrityState
+        {
+            FileExists,
+            FileMissing
+        }
         
     }
 }

@@ -75,12 +75,22 @@
             <Button Content="Parse" Grid.Column="1" HorizontalAlignment="Left" Margin="383,70,0,0" VerticalAlignment="Top" Width="75" Name="FileCSVParseButton" Command="{Binding FileParseCommand}" Height="22" Background="#FF00A2FF"/>
             <ListView Grid.Column="1" HorizontalAlignment="Left" Height="215" Margin="2,2,0,0" Grid.Row="1" VerticalAlignment="Top" Width="528" Name="FilesToBeMigratedConsole" 
                      ItemsSource="{Binding FilesToBeMigrated}" BorderThickness="2" BorderBrush="Black" FontFamily="Consolas">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding FilePath}"/>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="File path"
+                                        Width="Auto"
+                                        DisplayMemberBinding="{Binding Path=FilePath}"/>
+                       <GridViewColumn Header="Project Code"
+                                        Width="Auto"
+                                        DisplayMemberBinding="{Binding Path=ProjectCode}"/>
+                        <GridViewColumn Header="Keywords"
+                                        Width="Auto"
+                                        DisplayMemberBinding="{Binding Path=Keywords}"/>
+                    </GridView>
+                </ListView.View>
             </ListView>
+            <TextBox x:Name="label" Text="{Binding TotalFilesInMigration}" HorizontalAlignment="Left" Margin="111,19,0,0" Grid.Row="1" VerticalAlignment="Top" Width="63" Height="18" IsReadOnly="True" HorizontalContentAlignment="Center"/>
+            <Label x:Name="label1" Content="Amount of files:" HorizontalAlignment="Left" Margin="34,16,0,0" Grid.Row="1" VerticalAlignment="Top" Width="72" Height="24" FontSize="9" />
 
         </Grid>
     </DockPanel>

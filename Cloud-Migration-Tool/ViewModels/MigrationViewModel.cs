@@ -1,18 +1,16 @@
-﻿using Cloud_Migration_Tool.Misc;
+﻿using Cloud_Migration_Tool.Helper_Classes;
+using Cloud_Migration_Tool.Misc;
+using Cloud_Migration_Tool.Models;
 using System;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Input;
-using Cloud_Migration_Tool.Helper_Classes;
-using System.Collections.ObjectModel;
-using Cloud_Migration_Tool.Models;
 
 namespace Cloud_Migration_Tool.ViewModels
 {
     public class MigrationViewModel : INPC
     {
-        
-        
 
         public MigrationViewModel()
         {
@@ -23,7 +21,14 @@ namespace Cloud_Migration_Tool.ViewModels
         }
 
 
-
+        private string _totalFilesInMigration = "0";
+        public String TotalFilesInMigration {
+            get { return _totalFilesInMigration.ToString(); }
+            set {
+                _totalFilesInMigration = value;
+                RaisePropertyChanged("TotalFilesInMigration");
+            }
+        }
 
         #region TextBoxContent
         private string _projectTextBoxContents = "Path to Project Migration CSV...";
@@ -49,7 +54,9 @@ namespace Cloud_Migration_Tool.ViewModels
             get { return _filesToBeMigrated; }
             set {
                 _filesToBeMigrated = value;
+                TotalFilesInMigration = value.Count.ToString();
                 RaisePropertyChanged("FilesToBeMigrated");
+
             }
         }
         #endregion
@@ -92,6 +99,16 @@ namespace Cloud_Migration_Tool.ViewModels
             FilesToBeMigrated = new ObservableCollection<FileToBeMigrated>(result);
 
           
+        }
+
+        private void StartFileCheckerAsync()
+        {
+            var TaskIntegrityChecker = new Task(FileIntegrityCheck);
+        }
+
+        private async Task FileIntegrityCheck()
+        {
+           
         }
 
 
