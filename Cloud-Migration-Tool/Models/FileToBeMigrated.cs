@@ -1,13 +1,12 @@
 ﻿using FileHelpers;
-using System.Text;
 
 namespace Cloud_Migration_Tool.Models
 {
     [DelimitedRecord(",")]
     [IgnoreEmptyLines]
     [IgnoreFirst(1)]
-    
-    public class FileToBeMigrated
+
+    public class FileToBeMigrated : INPC
     {
         [FieldOrder(1)]
         [FieldQuoted('"', QuoteMode.OptionalForBoth)]
@@ -21,11 +20,18 @@ namespace Cloud_Migration_Tool.Models
         [FieldQuoted('"', QuoteMode.OptionalForBoth)]
         public string Keywords { get; set; }
 
-        public enum FileIntegrityState
-        {
-            FileExists,
-            FileMissing
+        [FieldHidden]
+        private bool _fileExists;
+
+        public bool FileExists {
+            get {
+                return _fileExists;
+            }
+            set {
+                _fileExists = value;
+                RaisePropertyChanged("FileExists");
+            }
+
         }
-        
     }
 }

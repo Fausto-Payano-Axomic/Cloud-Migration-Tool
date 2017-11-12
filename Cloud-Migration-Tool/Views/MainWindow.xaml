@@ -77,10 +77,13 @@
                      ItemsSource="{Binding FilesToBeMigrated}" BorderThickness="2" BorderBrush="Black" FontFamily="Consolas">
                 <ListView.View>
                     <GridView>
+                        <GridViewColumn Header="File State"
+                                        Width="Auto"
+                                        DisplayMemberBinding="{Binding Path=FileExists}"/>
                         <GridViewColumn Header="File path"
                                         Width="Auto"
                                         DisplayMemberBinding="{Binding Path=FilePath}"/>
-                       <GridViewColumn Header="Project Code"
+                        <GridViewColumn Header="Project Code"
                                         Width="Auto"
                                         DisplayMemberBinding="{Binding Path=ProjectCode}"/>
                         <GridViewColumn Header="Keywords"
@@ -91,6 +94,7 @@
             </ListView>
             <TextBox x:Name="label" Text="{Binding TotalFilesInMigration}" HorizontalAlignment="Left" Margin="111,19,0,0" Grid.Row="1" VerticalAlignment="Top" Width="63" Height="18" IsReadOnly="True" HorizontalContentAlignment="Center"/>
             <Label x:Name="label1" Content="Amount of files:" HorizontalAlignment="Left" Margin="34,16,0,0" Grid.Row="1" VerticalAlignment="Top" Width="72" Height="24" FontSize="9" />
+            <Button x:Name="button" Content="Check Files" HorizontalAlignment="Left" Margin="99,45,0,0" Grid.Row="1" VerticalAlignment="Top" Width="75" Command="{Binding CheckFileIntegrityCommand}"/>
 
         </Grid>
     </DockPanel>

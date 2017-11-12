@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Input;
+using System.IO;
 
 namespace Cloud_Migration_Tool.ViewModels
 {
@@ -17,18 +18,21 @@ namespace Cloud_Migration_Tool.ViewModels
             Predicate<object> canExecuteProjectButton = _ => !(ProjectTextBoxContents.Contains("/"));
             ProjectParseCommand = new RelayCommand((s) => ParseProjectsToBeMigrated(ProjectTextBoxContents),canExecuteProjectButton);
             FileParseCommand = new RelayCommand((s) => ParseFilesToBeMigrated(FileTextBoxContents));
+            CheckFileIntegrityCommand = new RelayCommand(async (s) => await FilesIntegrityCheckTask());
             
         }
 
 
         private string _totalFilesInMigration = "0";
-        public String TotalFilesInMigration {
+        private bool CheckingFiles = false;
+        public string TotalFilesInMigration {
             get { return _totalFilesInMigration.ToString(); }
             set {
                 _totalFilesInMigration = value;
                 RaisePropertyChanged("TotalFilesInMigration");
             }
         }
+
 
         #region TextBoxContent
         private string _projectTextBoxContents = "Path to Project Migration CSV...";
@@ -63,6 +67,7 @@ namespace Cloud_Migration_Tool.ViewModels
         #region Commands
         private ICommand _projectParseCommand;
         private ICommand _fileParseCommand;
+        private ICommand _checkFileIntegrityCommand;
 
         public ICommand ProjectParseCommand {
             get {
@@ -80,6 +85,15 @@ namespace Cloud_Migration_Tool.ViewModels
                 _fileParseCommand = value;
             }
         }
+        public ICommand CheckFileIntegrityCommand {
+            get {
+                return _checkFileIntegrityCommand;
+            }
+            set {
+                _checkFileIntegrityCommand = value;
+            }
+        }
+
 
 
 
@@ -97,18 +111,23 @@ namespace Cloud_Migration_Tool.ViewModels
 
             var result = await Task.Run(() => parser.Parse(filePath));
             FilesToBeMigrated = new ObservableCollection<FileToBeMigrated>(result);
+            
 
           
         }
-
-        private void StartFileCheckerAsync()
+        private async Task FilesIntegrityCheckTask()
         {
-            var TaskIntegrityChecker = new Task(FileIntegrityCheck);
+            CheckingFiles = true;
+            await Task.Run(() => CheckFiles());
         }
 
-        private async Task FileIntegrityCheck()
+        private void CheckFiles()
         {
-           
+            foreach (var file in FilesToBeMigrated)
+            {
+                file.FileExists = File.Exists(file.FilePath);
+            };
+            RaisePropertyChanged("FilesToBeMigrated");
         }
 
 
