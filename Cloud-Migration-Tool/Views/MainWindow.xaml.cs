@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Cloud_Migration_Tool.Misc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,11 +19,17 @@ namespace Cloud_Migration_Tool
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : Window, ISecurePassword
     {
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        public System.Security.SecureString Password {
+            get {
+                return PasswordBox.SecurePassword;
+            }
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

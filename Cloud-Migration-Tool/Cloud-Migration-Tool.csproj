@@ -79,6 +79,7 @@
     <Compile Include="Helper Classes\FileIntegrityChecker.cs" />
     <Compile Include="Helper Classes\Parser.cs" />
     <Compile Include="Misc\INPC.cs" />
+    <Compile Include="Misc\ISecurePassword.cs" />
     <Compile Include="Misc\RelayCommand.cs" />
     <Compile Include="Models\FilesToBeUploaded.cs" />
     <Compile Include="Models\FilesUploaded.cs" />
@@ -121,18 +122,6 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Logo.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\openasset-logo.svg" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\OA LOGO.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\OALogo.ico" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\OALogo.PNG" />

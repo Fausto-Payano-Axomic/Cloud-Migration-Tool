@@ -4,6 +4,8 @@ using Cloud_Migration_Tool.Models;
 using System;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Runtime.InteropServices;
+using System.Security;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Input;
@@ -12,24 +14,29 @@ namespace Cloud_Migration_Tool.ViewModels
 {
     public class MigrationViewModel : INPC
     {
+        MigrationModel migration = new MigrationModel();
 
         public MigrationViewModel()
         {
             Predicate<object> canExecuteProjectButton = _ => !(ProjectTextBoxContents.Contains("/"));
-            ProjectParseCommand = new RelayCommand((s) => ParseProjectsToBeMigrated(ProjectTextBoxContents),canExecuteProjectButton);
+            ProjectParseCommand = new RelayCommand((s) => ParseProjectsToBeMigrated(ProjectTextBoxContents), canExecuteProjectButton);
             FileParseCommand = new RelayCommand((s) => ParseFilesToBeMigrated(FileTextBoxContents));
             CheckFileIntegrityCommand = new RelayCommand(async (s) => await FilesIntegrityCheckTask());
-            
+            LoginCommand = new RelayCommand(Login);
+
         }
 
 
         private int _totalFilesInMigration = 0;
-        private bool _checkingFiles = false;
         private int _checkCount = 0;
+        private bool _checkingFiles = false;
+        private string _hostAddress;
+        private string _username;
 
         public int CheckCount {
             get { return _checkCount; }
-            set { _checkCount = value;
+            set {
+                _checkCount = value;
                 RaisePropertyChanged("CheckCount");
             }
 
@@ -49,6 +56,36 @@ namespace Cloud_Migration_Tool.ViewModels
             }
         }
 
+
+
+        public string HostAddress {
+            get { return _hostAddress; }
+            set {
+                _hostAddress = value;
+                RaisePropertyChanged("HostAddress");
+            }
+        }
+        public string Username {
+            get { return _username; }
+            set {
+                _username = value;
+                RaisePropertyChanged("Username");
+            }
+        }
+
+        #region Logging_in
+
+        private void Login(object parameter)
+        {
+            var passwordContainer = parameter as ISecurePassword;
+            if(passwordContainer != null)
+            {
+                var secureString = passwordContainer.Password;
+                MessageBox.Show(ConvertToUnsecureString(secureString));
+            }
+
+        }
+        #endregion
 
         #region TextBoxContent
         private string _projectTextBoxContents = "Path to Project Migration CSV...";
@@ -84,6 +121,7 @@ namespace Cloud_Migration_Tool.ViewModels
         private ICommand _projectParseCommand;
         private ICommand _fileParseCommand;
         private ICommand _checkFileIntegrityCommand;
+        private ICommand _loginCommand;
 
         public ICommand ProjectParseCommand {
             get {
@@ -92,7 +130,7 @@ namespace Cloud_Migration_Tool.ViewModels
             set {
                 _projectParseCommand = value;
             }
-        }       
+        }
         public ICommand FileParseCommand {
             get {
                 return _fileParseCommand;
@@ -109,10 +147,14 @@ namespace Cloud_Migration_Tool.ViewModels
                 _checkFileIntegrityCommand = value;
             }
         }
+        public ICommand LoginCommand {
+            get { return _loginCommand; }
+            set {
+                _loginCommand = value;
+                RaisePropertyChanged("LoginCommand");
+            }
 
-
-
-
+        }
         #endregion
         #region CSV Parsing Methods
 
@@ -122,14 +164,14 @@ namespace Cloud_Migration_Tool.ViewModels
         }
         private async void ParseFilesToBeMigrated(string filePath)
         {
-            
+
             Parser parser = new Parser();
 
             var result = await Task.Run(() => parser.Parse(filePath));
             FilesToBeMigrated = new ObservableCollection<FileToBeMigrated>(result);
             CheckCount = 0;
 
-          
+
         }
         private async Task FilesIntegrityCheckTask()
         {
@@ -172,16 +214,35 @@ namespace Cloud_Migration_Tool.ViewModels
                 toggleExecuteCommand = value;
             }
         }
-        
+
         public void ChangeCanExecute(object obj)
         {
             canExecute = !canExecute;
         }
         #endregion
 
+        private string ConvertToUnsecureString(SecureString securePassword)
+        {
+            if (securePassword == null)
+            {
+                return string.Empty;
+            }
+
+            IntPtr unmanagedString = IntPtr.Zero;
+            try
+            {
+                unmanagedString = Marshal.SecureStringToGlobalAllocUnicode(securePassword);
+                return Marshal.PtrToStringUni(unmanagedString);
+            }
+            finally
+            {
+                Marshal.ZeroFreeGlobalAllocUnicode(unmanagedString);
+            }
+        }
 
 
-      
+
+
 
 
 
