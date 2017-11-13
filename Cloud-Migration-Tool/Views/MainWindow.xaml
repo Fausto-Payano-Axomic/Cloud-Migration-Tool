@@ -94,7 +94,9 @@
             </ListView>
             <TextBox x:Name="label" Text="{Binding TotalFilesInMigration}" HorizontalAlignment="Left" Margin="111,19,0,0" Grid.Row="1" VerticalAlignment="Top" Width="63" Height="18" IsReadOnly="True" HorizontalContentAlignment="Center"/>
             <Label x:Name="label1" Content="Amount of files:" HorizontalAlignment="Left" Margin="34,16,0,0" Grid.Row="1" VerticalAlignment="Top" Width="72" Height="24" FontSize="9" />
-            <Button x:Name="button" Content="Check Files" HorizontalAlignment="Left" Margin="99,45,0,0" Grid.Row="1" VerticalAlignment="Top" Width="75" Command="{Binding CheckFileIntegrityCommand}"/>
+            <Button x:Name="button" Content="Check Files" HorizontalAlignment="Left" Margin="20,197,0,0" Grid.Row="1" VerticalAlignment="Top" Width="75" Command="{Binding CheckFileIntegrityCommand}" Grid.Column="2"/>
+            <TextBox x:Name="label_Copy" Text="{Binding CheckCount}" HorizontalAlignment="Left" Margin="111,60,0,0" Grid.Row="1" VerticalAlignment="Top" Width="63" Height="18" IsReadOnly="True" HorizontalContentAlignment="Center"/>
+            <Label x:Name="label1_Copy" Content="Files Checked:" HorizontalAlignment="Left" Margin="34,57,0,0" Grid.Row="1" VerticalAlignment="Top" Width="72" Height="24" FontSize="9" />
 
         </Grid>
     </DockPanel>

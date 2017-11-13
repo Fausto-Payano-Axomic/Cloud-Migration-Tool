@@ -3,10 +3,10 @@ using Cloud_Migration_Tool.Misc;
 using Cloud_Migration_Tool.Models;
 using System;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Input;
-using System.IO;
 
 namespace Cloud_Migration_Tool.ViewModels
 {
@@ -23,10 +23,26 @@ namespace Cloud_Migration_Tool.ViewModels
         }
 
 
-        private string _totalFilesInMigration = "0";
-        private bool CheckingFiles = false;
-        public string TotalFilesInMigration {
-            get { return _totalFilesInMigration.ToString(); }
+        private int _totalFilesInMigration = 0;
+        private bool _checkingFiles = false;
+        private int _checkCount = 0;
+
+        public int CheckCount {
+            get { return _checkCount; }
+            set { _checkCount = value;
+                RaisePropertyChanged("CheckCount");
+            }
+
+        }
+        public bool CheckingFiles {
+            get { return _checkingFiles; }
+            set {
+                _checkingFiles = value;
+                RaisePropertyChanged("CheckingFiles");
+            }
+        }
+        public int TotalFilesInMigration {
+            get { return _totalFilesInMigration; }
             set {
                 _totalFilesInMigration = value;
                 RaisePropertyChanged("TotalFilesInMigration");
@@ -58,7 +74,7 @@ namespace Cloud_Migration_Tool.ViewModels
             get { return _filesToBeMigrated; }
             set {
                 _filesToBeMigrated = value;
-                TotalFilesInMigration = value.Count.ToString();
+                TotalFilesInMigration = value.Count;
                 RaisePropertyChanged("FilesToBeMigrated");
 
             }
@@ -111,7 +127,7 @@ namespace Cloud_Migration_Tool.ViewModels
 
             var result = await Task.Run(() => parser.Parse(filePath));
             FilesToBeMigrated = new ObservableCollection<FileToBeMigrated>(result);
-            
+            CheckCount = 0;
 
           
         }
@@ -126,8 +142,8 @@ namespace Cloud_Migration_Tool.ViewModels
             foreach (var file in FilesToBeMigrated)
             {
                 file.FileExists = File.Exists(file.FilePath);
+                CheckCount++;
             };
-            RaisePropertyChanged("FilesToBeMigrated");
         }
 
 
