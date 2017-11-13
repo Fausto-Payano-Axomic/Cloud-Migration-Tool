@@ -44,7 +44,7 @@
       <HintPath>..\packages\FileHelpers.3.2.7\lib\net45\FileHelpers.dll</HintPath>
     </Reference>
     <Reference Include="OpenAsset.RestClient.Library">
-      <HintPath>packages\OpenAsset.RestClient.Library.dll</HintPath>
+      <HintPath>..\packages\OpenAsset-Rest-cs\OpenAsset.RestClient.Library.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />

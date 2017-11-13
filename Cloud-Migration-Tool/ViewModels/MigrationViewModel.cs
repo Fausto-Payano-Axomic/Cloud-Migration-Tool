@@ -55,9 +55,6 @@ namespace Cloud_Migration_Tool.ViewModels
                 RaisePropertyChanged("TotalFilesInMigration");
             }
         }
-
-
-
         public string HostAddress {
             get { return _hostAddress; }
             set {
