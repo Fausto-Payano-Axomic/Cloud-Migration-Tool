@@ -104,13 +104,14 @@
 
             <Label Margin ="0,0,3,194" Content="Client Address:" HorizontalAlignment="Right"/>
             <Label Margin ="0,30,5,164" Content="Username:" HorizontalAlignment="Right"/>
-            <Label Margin ="0,30,356,164" Content="Password:" HorizontalAlignment="Right" Grid.Column="1"/>
+            <Label Margin ="0,30,351,164" Content="Password:" HorizontalAlignment="Right" Grid.Column="1"/>
             <TextBox x:Name="hostAddress" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="2,4,0,0" TextWrapping="Wrap" Text="{Binding HostAddress, Mode=TwoWay}" VerticalAlignment="Top" Width="302"/>
             <TextBox x:Name="Username" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="2,34,0,0" TextWrapping="Wrap" Text="{Binding Username, Mode=TwoWay}" VerticalAlignment="Top" Width="115"/>
             <PasswordBox x:Name="PasswordBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="189,34,0,0" VerticalAlignment="Top" Width="115" PasswordChar="*"/>
             <Button x:Name="Login" Content="Login" Command="{Binding LoginCommand}" CommandParameter="{Binding ElementName=This}" Grid.Column="1" HorizontalAlignment="Left" Margin="327,37,0,0" VerticalAlignment="Top" Width="75"/>
-            <Label Content="SessionKey:" HorizontalAlignment="Left" Margin="111,62,0,0" VerticalAlignment="Top" Width="70"/>
-            <Label Content="{Binding}" Grid.Column="1" HorizontalAlignment="Left" Margin="2,62,0,0" VerticalAlignment="Top" Width="153"/>
+            <Label Content="SessionKey:" HorizontalAlignment="Left" Margin="111,62,0,0" VerticalAlignment="Top" Width="70" />
+            <Label Content="{Binding SessionKey}" Grid.Column="1" HorizontalAlignment="Left" Margin="2,62,0,0" VerticalAlignment="Top" Width="223" Height="26" FontWeight="Bold" FontSize="10" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+            <Label Content="{Binding LoginState}" Grid.Column="1" HorizontalAlignment="Left" Margin="309,4,0,0" VerticalAlignment="Top" Width="33" Height="23" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
 
         </Grid>
     </DockPanel>

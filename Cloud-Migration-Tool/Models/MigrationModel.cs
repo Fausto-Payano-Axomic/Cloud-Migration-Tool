@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel;
-using OpenAsset.RestClient;
+using OpenAsset.RestClient.Library;
 
 namespace Cloud_Migration_Tool.Models
 {
@@ -7,10 +7,25 @@ namespace Cloud_Migration_Tool.Models
     {
         private string _hostAddress;
         private string _sessionKey;
+        private Connection _conn;
+        private bool _credentialsValidated;
 
         public MigrationModel()
         {
+        }
 
+        public void Login(string username, string password, string hostAddress)
+        {
+            Conn = Connection.GetConnection(hostAddress, username, password);
+            CredentialsValidated = Conn.ValidateCredentials();
+            if (CredentialsValidated)
+            {
+                SessionKey = Conn.SessionKey;
+            }
+            else
+            {
+                SessionKey = "Incorrect Username or Password";
+            }
         }
 
         public string HostAddress {
@@ -26,7 +41,18 @@ namespace Cloud_Migration_Tool.Models
                 RaisePropertyChanged("SessionKey");
             }
         }
-
+        public Connection Conn {
+            get { return _conn; }
+            set { _conn = value;
+                RaisePropertyChanged("Conn");
+            }
+        }
+        public bool CredentialsValidated {
+            get { return _credentialsValidated; }
+            set { _credentialsValidated = value;
+                RaisePropertyChanged("CredentialsValidated");
+            }
+        }
 
         #region InterfaceMethods
         public event PropertyChangedEventHandler PropertyChanged;

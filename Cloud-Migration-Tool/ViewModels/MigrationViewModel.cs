@@ -32,6 +32,9 @@ namespace Cloud_Migration_Tool.ViewModels
         private bool _checkingFiles = false;
         private string _hostAddress;
         private string _username;
+        private string _loginState;
+        private string _sessionKey;
+
 
         public int CheckCount {
             get { return _checkCount; }
@@ -58,7 +61,12 @@ namespace Cloud_Migration_Tool.ViewModels
         public string HostAddress {
             get { return _hostAddress; }
             set {
-                _hostAddress = value;
+                if (!value.Contains(".openasset.com")){
+                    _hostAddress = $"https://{value}.openasset.com";
+                }
+                else {
+                    _hostAddress = value;
+                }
                 RaisePropertyChanged("HostAddress");
             }
         }
@@ -69,16 +77,29 @@ namespace Cloud_Migration_Tool.ViewModels
                 RaisePropertyChanged("Username");
             }
         }
-
+        public string LoginState {
+            get { return _loginState; }
+            set { _loginState = value;
+                RaisePropertyChanged("LoginState");
+            }
+        }
+        public string SessionKey {
+            get { return _sessionKey; }
+            set { _sessionKey = value;
+                RaisePropertyChanged("SessionKey");
+            }
+        }
         #region Logging_in
 
         private void Login(object parameter)
         {
             var passwordContainer = parameter as ISecurePassword;
-            if(passwordContainer != null)
+            if (passwordContainer != null)
             {
                 var secureString = passwordContainer.Password;
-                MessageBox.Show(ConvertToUnsecureString(secureString));
+                migration.Login(Username, ConvertToUnsecureString(secureString), HostAddress);
+                SessionKey = migration.SessionKey;
+                LoginState = migration.CredentialsValidated ? "\u221A" : "";
             }
 
         }
