@@ -23,6 +23,7 @@ namespace Cloud_Migration_Tool.ViewModels
             FileParseCommand = new RelayCommand((s) => ParseFilesToBeMigrated(FileTextBoxContents));
             CheckFileIntegrityCommand = new RelayCommand(async (s) => await FilesIntegrityCheckTask());
             LoginCommand = new RelayCommand(Login);
+            BeginMigrationCommand = new RelayCommand((s) => BeginMigratingFiles());
 
         }
 
@@ -104,7 +105,6 @@ namespace Cloud_Migration_Tool.ViewModels
 
         }
         #endregion
-
         #region TextBoxContent
         private string _projectTextBoxContents = "Path to Project Migration CSV...";
         private string _fileTextBoxContents = "Path to File Migration CSV...";
@@ -140,6 +140,7 @@ namespace Cloud_Migration_Tool.ViewModels
         private ICommand _fileParseCommand;
         private ICommand _checkFileIntegrityCommand;
         private ICommand _loginCommand;
+        private ICommand _beginMigrationCommand;
 
         public ICommand ProjectParseCommand {
             get {
@@ -173,8 +174,14 @@ namespace Cloud_Migration_Tool.ViewModels
             }
 
         }
+        public ICommand BeginMigrationCommand {
+            get { return _beginMigrationCommand; }
+            set { _beginMigrationCommand = value;
+                RaisePropertyChanged("BeginMigrationCommand");
+            }
+        }
         #endregion
-        #region CSV Parsing Methods
+        #region Migration Related Methods
 
         private void ParseProjectsToBeMigrated(string filePath)
         {
@@ -204,6 +211,11 @@ namespace Cloud_Migration_Tool.ViewModels
                 file.FileExists = File.Exists(file.FilePath);
                 CheckCount++;
             };
+        }
+
+        private void BeginMigratingFiles()
+        {
+            
         }
 
 

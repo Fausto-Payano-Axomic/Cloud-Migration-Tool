@@ -77,7 +77,7 @@
                      ItemsSource="{Binding FilesToBeMigrated}" BorderThickness="2" BorderBrush="Black" FontFamily="Consolas">
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn Header="File State"
+                        <GridViewColumn Header="File Exists"
                                         Width="Auto"
                                         DisplayMemberBinding="{Binding Path=FileExists}"/>
                         <GridViewColumn Header="File path"
@@ -92,7 +92,7 @@
                     </GridView>
                 </ListView.View>
             </ListView>
-            <Button x:Name="button" Content="Check Files" HorizontalAlignment="Left" Margin="20,197,0,0" Grid.Row="1" VerticalAlignment="Top" Width="75" Command="{Binding CheckFileIntegrityCommand}" Grid.Column="2"/>
+            <Button x:Name="button" Content="Check Files" HorizontalAlignment="Left" Margin="99,86,0,0" Grid.Row="1" VerticalAlignment="Top" Width="75" Command="{Binding CheckFileIntegrityCommand}"/>
 
 
             <TextBox x:Name="label" Text="{Binding TotalFilesInMigration}" HorizontalAlignment="Left" Margin="111,19,0,0" Grid.Row="1" VerticalAlignment="Top" Width="63" Height="18" IsReadOnly="True" HorizontalContentAlignment="Center"/>
@@ -111,7 +111,10 @@
             <Button x:Name="Login" Content="Login" Command="{Binding LoginCommand}" CommandParameter="{Binding ElementName=This}" Grid.Column="1" HorizontalAlignment="Left" Margin="327,37,0,0" VerticalAlignment="Top" Width="75"/>
             <Label Content="SessionKey:" HorizontalAlignment="Left" Margin="111,62,0,0" VerticalAlignment="Top" Width="70" />
             <Label Content="{Binding SessionKey}" Grid.Column="1" HorizontalAlignment="Left" Margin="2,62,0,0" VerticalAlignment="Top" Width="223" Height="26" FontWeight="Bold" FontSize="10" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-            <Label Content="{Binding LoginState}" Grid.Column="1" HorizontalAlignment="Left" Margin="309,4,0,0" VerticalAlignment="Top" Width="33" Height="23" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+            <Label Content="{Binding LoginState}" Grid.Column="1" HorizontalAlignment="Left" Margin="309,4,0,0" VerticalAlignment="Top" Width="33" Height="23" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+            <Button Command="{Binding BeginMigrationCommand}" Grid.Column="2" HorizontalAlignment="Left" Margin="10,146,0,0" Grid.Row="1" VerticalAlignment="Top" Width="75" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="43">
+                <TextBlock TextWrapping="Wrap" Text="Begin Migration" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Button>
 
         </Grid>
     </DockPanel>
