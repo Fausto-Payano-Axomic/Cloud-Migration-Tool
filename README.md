@@ -4,7 +4,7 @@ C# Cloud Migration tool that leverages the C# Rest library (https://github.com/a
 
 ### Sample Usage
 Below is a short demonstration gif of what a migration with the tool may look like:
-![Alt text](https://i.imgur.com/29bp2fa.gif)
+![Alt text](https://i.imgur.com/CPEcoyo.gif)
 
 ### License
 
