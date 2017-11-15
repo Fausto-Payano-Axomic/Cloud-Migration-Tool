@@ -30,7 +30,8 @@ namespace Cloud_Migration_Tool.Helper_Classes
             {
                 foreach (var file in FilesNotUploaded)
                 {
-                    Task<bool> task =  UploadFile(file);
+                    Task<bool> task = UploadFile(file);
+
                 }
             }
         }
@@ -51,6 +52,6 @@ namespace Cloud_Migration_Tool.Helper_Classes
         }
     }
 
-    
+
 }
 

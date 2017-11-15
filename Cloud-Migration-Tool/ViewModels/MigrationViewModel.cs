@@ -23,7 +23,7 @@ namespace Cloud_Migration_Tool.ViewModels
             FileParseCommand = new RelayCommand((s) => ParseFilesToBeMigrated(FileTextBoxContents));
             CheckFileIntegrityCommand = new RelayCommand(async (s) => await FilesIntegrityCheckTask());
             LoginCommand = new RelayCommand(Login);
-            BeginMigrationCommand = new RelayCommand((s) => BeginMigratingFiles());
+            BeginMigrationCommand = new RelayCommand(async (s) => await BeginMigratingFiles());
 
         }
 
@@ -225,10 +225,11 @@ namespace Cloud_Migration_Tool.ViewModels
             };
         }
 
-        private void BeginMigratingFiles()
+        private async Task BeginMigratingFiles()
         {
             FileMigrationHandler fileMigrationOverlord = new FileMigrationHandler(FilesToBeMigrated, migration);
-            fileMigrationOverlord.StartMigration();
+            await Task.Run(() => fileMigrationOverlord.StartMigration());
+            
         }
 
 
