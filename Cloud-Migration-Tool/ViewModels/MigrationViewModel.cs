@@ -215,7 +215,8 @@ namespace Cloud_Migration_Tool.ViewModels
 
         private void BeginMigratingFiles()
         {
-            
+            FileMigrationHandler fileMigrationOverlord = new FileMigrationHandler(FilesToBeMigrated, migration);
+            fileMigrationOverlord.StartMigration();
         }
 
 

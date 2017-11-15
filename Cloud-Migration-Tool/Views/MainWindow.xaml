@@ -80,6 +80,9 @@
                         <GridViewColumn Header="File Exists"
                                         Width="Auto"
                                         DisplayMemberBinding="{Binding Path=FileExists}"/>
+                        <GridViewColumn Header="File Migrated"
+                                        Width="Auto"
+                                        DisplayMemberBinding="{Binding Path=FileSuccessfullyMigrated}"/>
                         <GridViewColumn Header="File path"
                                         Width="Auto"
                                         DisplayMemberBinding="{Binding Path=FilePath}"/>

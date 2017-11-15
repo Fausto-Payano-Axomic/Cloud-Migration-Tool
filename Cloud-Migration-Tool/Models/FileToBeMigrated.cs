@@ -33,5 +33,15 @@ namespace Cloud_Migration_Tool.Models
             }
 
         }
+
+        [FieldHidden]
+        private bool _fileSuccessfullyMigrated;
+        public bool FileSuccessfullyMigrated {
+            get { return _fileSuccessfullyMigrated; }
+            set {
+                _fileSuccessfullyMigrated = value;
+                RaisePropertyChanged("FileSuccessfullyMigrated");
+            }
+        }
     }
 }
