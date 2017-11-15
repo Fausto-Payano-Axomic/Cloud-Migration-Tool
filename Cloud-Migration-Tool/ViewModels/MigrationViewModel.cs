@@ -34,7 +34,7 @@ namespace Cloud_Migration_Tool.ViewModels
         private string _hostAddress;
         private string _username;
         private string _loginState;
-        private string _sessionKey;
+        private string _sessionState;
 
 
         public int CheckCount {
@@ -62,10 +62,12 @@ namespace Cloud_Migration_Tool.ViewModels
         public string HostAddress {
             get { return _hostAddress; }
             set {
-                if (!value.Contains(".openasset.com")){
+                if (!value.Contains(".openasset.com"))
+                {
                     _hostAddress = $"https://{value}.openasset.com";
                 }
-                else {
+                else
+                {
                     _hostAddress = value;
                 }
                 RaisePropertyChanged("HostAddress");
@@ -80,14 +82,16 @@ namespace Cloud_Migration_Tool.ViewModels
         }
         public string LoginState {
             get { return _loginState; }
-            set { _loginState = value;
+            set {
+                _loginState = value;
                 RaisePropertyChanged("LoginState");
             }
         }
-        public string SessionKey {
-            get { return _sessionKey; }
-            set { _sessionKey = value;
-                RaisePropertyChanged("SessionKey");
+        public string SessionState {
+            get { return _sessionState; }
+            set {
+                _sessionState = value;
+                RaisePropertyChanged("SessionState");
             }
         }
         #region Logging_in
@@ -99,7 +103,14 @@ namespace Cloud_Migration_Tool.ViewModels
             {
                 var secureString = passwordContainer.Password;
                 migration.Login(Username, ConvertToUnsecureString(secureString), HostAddress);
-                SessionKey = migration.SessionKey;
+                if (!migration.SessionKey.Contains("Incorrect"))
+                {
+                    SessionState = $"Successfully Logged in as {Username}.";
+                }
+                else
+                {
+                    SessionState = migration.SessionKey;
+                }
                 LoginState = migration.CredentialsValidated ? "\u221A" : "";
             }
 
@@ -176,7 +187,8 @@ namespace Cloud_Migration_Tool.ViewModels
         }
         public ICommand BeginMigrationCommand {
             get { return _beginMigrationCommand; }
-            set { _beginMigrationCommand = value;
+            set {
+                _beginMigrationCommand = value;
                 RaisePropertyChanged("BeginMigrationCommand");
             }
         }

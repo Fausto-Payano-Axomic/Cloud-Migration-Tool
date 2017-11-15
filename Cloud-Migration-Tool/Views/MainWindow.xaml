@@ -5,6 +5,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Cloud_Migration_Tool.ViewModels"
+        xmlns:converters="clr-namespace:System.Windows.Controls;assembly=PresentationFramework"
         mc:Ignorable="d"
         Title="Cloud Migration Tool" Height="500" Width="825"
         FontSize="12"
@@ -26,6 +27,9 @@
         </Menu>
         <StackPanel></StackPanel>
         <Grid>
+            <Grid.Resources>
+                <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+            </Grid.Resources>
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
@@ -112,8 +116,8 @@
             <TextBox x:Name="Username" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="2,34,0,0" TextWrapping="Wrap" Text="{Binding Username, Mode=TwoWay}" VerticalAlignment="Top" Width="115"/>
             <PasswordBox x:Name="PasswordBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="189,34,0,0" VerticalAlignment="Top" Width="115" PasswordChar="*"/>
             <Button x:Name="Login" Content="Login" Command="{Binding LoginCommand}" CommandParameter="{Binding ElementName=This}" Grid.Column="1" HorizontalAlignment="Left" Margin="327,37,0,0" VerticalAlignment="Top" Width="75"/>
-            <Label Content="SessionKey:" HorizontalAlignment="Left" Margin="111,62,0,0" VerticalAlignment="Top" Width="70" />
-            <Label Content="{Binding SessionKey}" Grid.Column="1" HorizontalAlignment="Left" Margin="2,62,0,0" VerticalAlignment="Top" Width="223" Height="26" FontWeight="Bold" FontSize="10" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+            <Label Content="Session State:" HorizontalAlignment="Left" Margin="99,62,0,0" VerticalAlignment="Top" Width="82" />
+            <Label Content="{Binding SessionState}" Grid.Column="1" HorizontalAlignment="Left" Margin="2,62,0,0" VerticalAlignment="Top" Width="223" Height="26" FontWeight="Bold" FontSize="10" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
             <Label Content="{Binding LoginState}" Grid.Column="1" HorizontalAlignment="Left" Margin="309,4,0,0" VerticalAlignment="Top" Width="33" Height="23" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
             <Button Command="{Binding BeginMigrationCommand}" Grid.Column="2" HorizontalAlignment="Left" Margin="10,146,0,0" Grid.Row="1" VerticalAlignment="Top" Width="75" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="43">
                 <TextBlock TextWrapping="Wrap" Text="Begin Migration" HorizontalAlignment="Center" VerticalAlignment="Center"/>
