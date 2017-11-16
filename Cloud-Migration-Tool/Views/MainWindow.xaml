@@ -122,6 +122,12 @@
             <Button Command="{Binding BeginMigrationCommand}" Grid.Column="2" HorizontalAlignment="Left" Margin="10,146,0,0" Grid.Row="1" VerticalAlignment="Top" Width="75" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="43">
                 <TextBlock TextWrapping="Wrap" Text="Begin Migration" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             </Button>
+            <StackPanel HorizontalAlignment="Left" Height="100" Margin="6,111,0,0" Grid.Row="1" VerticalAlignment="Top" Width="168">
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Keyword Delimiter:" HorizontalAlignment="Left"/>
+                    <TextBox Height="22" TextWrapping="Wrap" Text="{Binding KeywordDelimiter, Mode=TwoWay}" Opacity=".5" Width="47" HorizontalAlignment="Right"/>
+                </StackPanel>
+            </StackPanel>
 
         </Grid>
     </DockPanel>

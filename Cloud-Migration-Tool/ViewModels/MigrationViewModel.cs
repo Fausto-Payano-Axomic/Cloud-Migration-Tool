@@ -35,6 +35,8 @@ namespace Cloud_Migration_Tool.ViewModels
         private string _username;
         private string _loginState;
         private string _sessionState;
+        private string _keywordDelimiter = ";";
+
 
 
         public int CheckCount {
@@ -92,6 +94,12 @@ namespace Cloud_Migration_Tool.ViewModels
             set {
                 _sessionState = value;
                 RaisePropertyChanged("SessionState");
+            }
+        }
+        public string KeywordDelimiter {
+            get { return _keywordDelimiter; }
+            set { _keywordDelimiter = value;
+                RaisePropertyChanged("KeywordDelimiter");
             }
         }
         #region Logging_in
@@ -227,7 +235,7 @@ namespace Cloud_Migration_Tool.ViewModels
 
         private async Task BeginMigratingFiles()
         {
-            FileMigrationHandler fileMigrationOverlord = new FileMigrationHandler(FilesToBeMigrated, migration);
+            FileMigrationHandler fileMigrationOverlord = new FileMigrationHandler(FilesToBeMigrated, migration, KeywordDelimiter);
             await Task.Run(() => fileMigrationOverlord.StartMigration());
             
         }
