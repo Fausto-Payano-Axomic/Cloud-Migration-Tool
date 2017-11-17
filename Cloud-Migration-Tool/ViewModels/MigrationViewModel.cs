@@ -36,6 +36,7 @@ namespace Cloud_Migration_Tool.ViewModels
         private string _loginState;
         private string _sessionState;
         private string _keywordDelimiter = ";";
+        private string _keywordCategoryName = "Data Migration";
 
 
 
@@ -100,6 +101,13 @@ namespace Cloud_Migration_Tool.ViewModels
             get { return _keywordDelimiter; }
             set { _keywordDelimiter = value;
                 RaisePropertyChanged("KeywordDelimiter");
+            }
+        }
+
+        public string KeywordCategoryName {
+            get { return _keywordCategoryName; }
+            set { _keywordCategoryName = value;
+                RaisePropertyChanged("KeywordCategoryName");
             }
         }
         #region Logging_in
@@ -235,7 +243,7 @@ namespace Cloud_Migration_Tool.ViewModels
 
         private async Task BeginMigratingFiles()
         {
-            FileMigrationHandler fileMigrationOverlord = new FileMigrationHandler(FilesToBeMigrated, migration, KeywordDelimiter);
+            FileMigrationHandler fileMigrationOverlord = new FileMigrationHandler(FilesToBeMigrated, migration, KeywordDelimiter, KeywordCategoryName);
             await Task.Run(() => fileMigrationOverlord.StartMigration());
             
         }

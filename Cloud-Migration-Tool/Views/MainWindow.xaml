@@ -12,7 +12,6 @@
         ResizeMode="NoResize"
         WindowStartupLocation="CenterOwner" Background="#FFAEAAAA"
         >
-
     <Window.DataContext>
         <local:MigrationViewModel/>
     </Window.DataContext>
@@ -124,9 +123,16 @@
             </Button>
             <StackPanel HorizontalAlignment="Left" Height="100" Margin="6,111,0,0" Grid.Row="1" VerticalAlignment="Top" Width="168">
                 <StackPanel Orientation="Horizontal">
+                    <Label Content="Keyword Category Name:" HorizontalAlignment="Left"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBox Height="22" TextWrapping="Wrap" Text="{Binding KeywordCategoryName, Mode=TwoWay}" Opacity=".5" Width="169" HorizontalAlignment="Right" HorizontalContentAlignment="Center"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
                     <Label Content="Keyword Delimiter:" HorizontalAlignment="Left"/>
                     <TextBox Height="22" TextWrapping="Wrap" Text="{Binding KeywordDelimiter, Mode=TwoWay}" Opacity=".5" Width="47" HorizontalAlignment="Right"/>
                 </StackPanel>
+                
             </StackPanel>
 
         </Grid>
