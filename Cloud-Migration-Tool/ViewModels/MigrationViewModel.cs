@@ -23,8 +23,8 @@ namespace Cloud_Migration_Tool.ViewModels
             FileParseCommand = new RelayCommand((s) => ParseFilesToBeMigrated(FileTextBoxContents));
             CheckFileIntegrityCommand = new RelayCommand(async (s) => await FilesIntegrityCheckTask());
             LoginCommand = new RelayCommand(Login);
-            BeginMigrationCommand = new RelayCommand(async (s) => await BeginMigratingFiles());
-
+            //BeginMigrationCommand = new RelayCommand(async (s) => await BeginMigratingFiles());
+            BeginMigrationCommand = new AwaitableDelegateCommand(async () => await BeginMigratingFiles());
         }
 
 
