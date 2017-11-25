@@ -89,11 +89,8 @@
     <Compile Include="Misc\IRaiseCanExecuteChanged.cs" />
     <Compile Include="Misc\ISecurePassword.cs" />
     <Compile Include="Misc\RelayCommand.cs" />
-    <Compile Include="Models\FilesToBeUploaded.cs" />
-    <Compile Include="Models\FilesUploaded.cs" />
     <Compile Include="Models\FileToBeMigrated.cs" />
     <Compile Include="Models\MigrationModel.cs" />
-    <Compile Include="Models\ProjectsMigrationModel.cs" />
     <Compile Include="Models\ProjectToBeMigrated.cs" />
     <Compile Include="ViewModels\MigrationViewModel.cs" />
     <Compile Include="Views\MainWindow.xaml.cs">
