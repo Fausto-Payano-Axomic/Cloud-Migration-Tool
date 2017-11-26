@@ -4,9 +4,9 @@ C# Cloud Migration tool that leverages the C# Rest library (https://github.com/a
 
 ### Sample Usage
 Below is a short demonstration gif of what a migration with the tool may look like:
-![Alt text](https://i.imgur.com/CPEcoyo.gif)
+![Alt text](https://i.imgur.com/EWvzg8o.gif)
 
-Currently the tool synchronously uploads a CSV fed list of files. Over time I'll be expanding, asynchronizing and optimizing the upload processs. The first priority at the moment was to get the tool general UI up and running as well as basic file uploading.
+Currently the tool employs multi threading to upload files, updating the UI for each respective file upon completing the upload. Over time I'll be expanding, and optimizing the upload processs. The first priority at the moment was to get the tool general UI up and running as well as basic file uploading.
 
 ### License
 
