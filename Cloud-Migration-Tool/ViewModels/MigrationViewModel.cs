@@ -3,6 +3,7 @@ using Cloud_Migration_Tool.Misc;
 using Cloud_Migration_Tool.Models;
 using System;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Security;
@@ -24,7 +25,7 @@ namespace Cloud_Migration_Tool.ViewModels
             CheckFileIntegrityCommand = new RelayCommand(async (s) => await FilesIntegrityCheckTask());
             LoginCommand = new RelayCommand(Login);
             //BeginMigrationCommand = new RelayCommand(async (s) => await BeginMigratingFiles());
-            BeginMigrationCommand = new AwaitableDelegateCommand(async () => await BeginMigratingFiles());
+            BeginMigrationCommand = new RelayCommand((s) => BeginMigratingFiles());
         }
 
 
@@ -241,13 +242,13 @@ namespace Cloud_Migration_Tool.ViewModels
             };
         }
 
-        private async Task BeginMigratingFiles()
+        private void BeginMigratingFiles()
         {
+            var worker = new BackgroundWorker();
             FileMigrationHandler fileMigrationOverlord = new FileMigrationHandler(FilesToBeMigrated, migration, KeywordDelimiter, KeywordCategoryName);
-            await Task.Run(() => fileMigrationOverlord.StartMigration());
-            
+            worker.DoWork += new DoWorkEventHandler((sender, args) => fileMigrationOverlord.StartMigration());
+            worker.RunWorkerAsync();
         }
-
 
         #endregion
         #region ICommand Related Stuff

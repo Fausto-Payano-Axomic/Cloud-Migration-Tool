@@ -3,12 +3,14 @@ using Cloud_Migration_Tool.Models;
 using OpenAsset.RestClient.Library;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Linq;
 
-namespace AsyncFileUploadTesting {
+namespace ThreadedFileUploadTesting {
     class Program {
 
         private static Connection conn;
@@ -31,9 +33,9 @@ namespace AsyncFileUploadTesting {
 
 
             #region Logging in
-            string username = "{USERNAME HERE}";
+            string username = "{USERNAME}";
             string password;
-            string host = "https://accountmanagers.openasset.com";
+            string host = "https://demo-fpa.openasset.com";
             var tryingToLogIn = true;
 
             do {
@@ -60,22 +62,31 @@ namespace AsyncFileUploadTesting {
 
             #endregion
 
+            //StartMultiThreadedUploading(fileList.OrderBy(f => new FileInfo(f.FilePath).Length).ToList());
             StartMultiThreadedUploading(fileList);
+            Console.ReadLine();
         }
 
         private static void StartMultiThreadedUploading(List<FileToBeMigrated> fileList) {
             int maxConcurrency = 10;
+            Stopwatch mainTimer = new Stopwatch();
+            mainTimer.Start();
             using (SemaphoreSlim concurrencySemaphore = new SemaphoreSlim(maxConcurrency)) {
+
                 List<Task> tasks = new List<Task>();
                 foreach (var file in fileList) {
+                    
+                    Stopwatch timer = new Stopwatch();
+
                     concurrencySemaphore.Wait();
                     var t = Task.Factory.StartNew(() => {
                         try {
+                            timer.Start();
                             var fileInfo = new FileInfo(file.FilePath);
                             OpenAsset.RestClient.Library.Noun.File fileUpload = new OpenAsset.RestClient.Library.Noun.File() {
                                 OriginalFilename = fileInfo.Name,
                                 CategoryId = 1,
-                                ProjectId = 150
+                                ProjectId = 10
                             };
                             conn.SendObject(fileUpload, file.FilePath, true);
                         }
@@ -86,7 +97,9 @@ namespace AsyncFileUploadTesting {
                             Console.WriteLine(oddEx);
                         }
                         finally {
-                            Console.WriteLine($"File - {file.FilePath} Processed.");
+                            timer.Stop();
+         
+                            Console.WriteLine($"File - {file.FilePath} Processed. It took {timer.Elapsed}");
                             concurrencySemaphore.Release();
                         }
                     });
@@ -95,6 +108,9 @@ namespace AsyncFileUploadTesting {
 
                 Task.WaitAll(tasks.ToArray());
             }
+            mainTimer.Stop();
+            Console.WriteLine(mainTimer.Elapsed);
+
         }
     }
 }

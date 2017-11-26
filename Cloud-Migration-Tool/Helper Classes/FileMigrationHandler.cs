@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Cloud_Migration_Tool.Helper_Classes {
@@ -25,7 +26,8 @@ namespace Cloud_Migration_Tool.Helper_Classes {
         }
 
 
-        public FileMigrationHandler(ObservableCollection<FileToBeMigrated> filesToWorkWith, MigrationModel migrationModel, string preferredKeywordDelimiter, string keywordCategoryName) {
+        public FileMigrationHandler(ObservableCollection<FileToBeMigrated> filesToWorkWith, MigrationModel migrationModel,
+            string preferredKeywordDelimiter, string keywordCategoryName) {
             FilesNotUploaded = filesToWorkWith;
             Migration = migrationModel;
             KeywordDelimiter = preferredKeywordDelimiter;
@@ -33,87 +35,54 @@ namespace Cloud_Migration_Tool.Helper_Classes {
 
         }
 
-        public async void StartMigration() {
-            if (Migration != null) {
-                this.FileKeywordCategoriesCache = GetKeywordCategories();
-                this.DataMigrationCategory = GetOrCreateMigrationKeywordCategory();
-                this.FileKeywordsCache = GetKeywords();
-                
-                
+        public void StartMigration() {
+            int maxConcurrency = 20;
+            using (SemaphoreSlim concurrencySemaphores = new SemaphoreSlim(maxConcurrency)) {
+                List<Task> tasks = new List<Task>();
                 foreach (var file in FilesNotUploaded) {
-                    Task<bool> task = UploadFile(file);
+                    concurrencySemaphores.Wait();
+                    var t = Task.Factory.StartNew(() => {
+                        try {
+                            var fileInfo = new FileInfo(file.FilePath);
+                            OpenAsset.RestClient.Library.Noun.File fileUpload = new OpenAsset.RestClient.Library.Noun.File() {
+                                OriginalFilename = fileInfo.Name,
+                                CategoryId = 1,
+                                ProjectId = 10
+                            };
+                            var result = Migration.Conn.SendObject(fileUpload, file.FilePath, true);
+                        }
+                        catch (RESTAPIException ex) {
+                            file.MigrationErrorObj = ex.ErrorObj;
+                            switch (ex.ErrorObj.HttpStatusCode) {
+                                case 409:
+                                    file.MigrationHttpStatusCode = ex.ErrorObj.HttpStatusCode;
+                                    break;
+                            }
+                        }
 
+                        catch (Exception oddEx) {
+                        }
+                        finally {
+                            if (file.MigrationErrorObj == null) {
+                                file.FileSuccessfullyMigrated = true;
+                            }
+                            else {
+                                file.FileSuccessfullyMigrated = false;
+                            }
+                            concurrencySemaphores.Release();
+                        }
+                    });
+                    tasks.Add(t);
                 }
+
+                Task.WaitAll(tasks.ToArray());
             }
         }
 
-        private KeywordCategory GetOrCreateMigrationKeywordCategory() {
-            if (this.FileKeywordCategoriesCache.Any(keywordCategory => keywordCategory.Name == this.PreferredKeywordCategoryname)) {
-                var categoryCheck = FileKeywordCategoriesCache.Where(keywordCategory => keywordCategory.Name == PreferredKeywordCategoryname);
-                return categoryCheck.FirstOrDefault(keywordCategory => keywordCategory.CategoryId == 1);
-            }
-            else {
-                return CreateKeywordCategory(this.PreferredKeywordCategoryname);
-            }
-        }
-
-        private async Task<bool> UploadFile(FileToBeMigrated file) {
-            var fileInfo = new FileInfo(file.FilePath);
-            string[] potentialKeywords = new string[] { };
-            //Prepare file Object for API ENDPOINT
-            OpenAsset.RestClient.Library.Noun.File fileUpload = new OpenAsset.RestClient.Library.Noun.File() {
-                OriginalFilename = fileInfo.Name,
-                CategoryId = 1,
-                ProjectId = 150
-            };
-
-            //Check if there are keywords to tag.
-            if (!(string.IsNullOrEmpty(file.Keywords))) {
-
-                //Return an array of keywords to tag.
-                potentialKeywords = formatFileMigrationKeywords(file.Keywords);
-            }
-
-            //If there are keywords to tag then for each keyword, add it to the file to be uploaded's keyword list.
-            if (potentialKeywords.Length > 0) {
-                foreach (var keyword in potentialKeywords) {
-                    int idOfKeyword = GetProperKeywordId(keyword);
-                    fileUpload.Keywords.Add(new Keyword { Id = idOfKeyword });
-                }
-            }
-
-            var response = Migration.Conn.SendObject<OpenAsset.RestClient.Library.Noun.File>(fileUpload, file.FilePath, true);
-            file.FileSuccessfullyMigrated = true;
-            return true;
-        }
 
         private string[] formatFileMigrationKeywords(string keywordString) {
             string[] strArray = keywordString.Split(new string[] { this.KeywordDelimiter }, StringSplitOptions.None);
             return strArray;
-        }
-        private int GetProperKeywordId(string keywordName) {
-
-            //If our keyword cache contains any keywords that match the current keyword being checked
-            if (FileKeywordsCache.Any(keyword => keyword.Name == keywordName)) {
-
-                //Check to see if we get more than one result from the previous conditional.
-                var keywordCheck = (ICollection<Keyword>)FileKeywordsCache.Where(keyword => keyword.Name == keywordName);
-                if (keywordCheck.Count > 1) {
-                    //If we get multiple hits for the same keyword name string then grab the one that has the same category ID
-                    //as our migration keyword category.
-                    return keywordCheck.First(keyword => keyword.KeywordCategoryId == this.DataMigrationCategory.Id).Id;
-                }
-                //Else, if there is only one keyword result (or none), return the first result ID.
-                else {
-                    return keywordCheck.FirstOrDefault(x => x.Name == keywordName).Id;
-                }
-            }
-            //If the keyword is nowhere to be found, we are going to go ahead and create it, add it to the cache and return ID.
-            else {
-                var newlyCreatedKeyword = CreateKeyword(keywordName);
-                FileKeywordsCache.Add(newlyCreatedKeyword);
-                return newlyCreatedKeyword.Id;
-            }
         }
 
         #region General GET Requests for Caching
@@ -140,7 +109,7 @@ namespace Cloud_Migration_Tool.Helper_Classes {
                 Name = keywordCategoryName
             };
             return Migration.Conn.SendObject<KeywordCategory>(newKeywordCategory, true);
- 
+
         }
         #endregion
     }

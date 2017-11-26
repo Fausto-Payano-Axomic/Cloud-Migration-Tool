@@ -1,4 +1,5 @@
 ﻿using FileHelpers;
+using OpenAsset.RestClient.Library;
 
 namespace Cloud_Migration_Tool.Models
 {
@@ -42,6 +43,20 @@ namespace Cloud_Migration_Tool.Models
                 _fileSuccessfullyMigrated = value;
                 RaisePropertyChanged("FileSuccessfullyMigrated");
             }
+        }
+
+        [FieldHidden]
+        private int _migrationHttpStatusCode;
+        public int MigrationHttpStatusCode {
+            get { return _migrationHttpStatusCode; }
+            set { _migrationHttpStatusCode = value; }
+        }
+
+        [FieldHidden]
+        private Error _migrationErrorObj;
+        public Error MigrationErrorObj {
+            get { return _migrationErrorObj; }
+            set { _migrationErrorObj = value; }
         }
     }
 }

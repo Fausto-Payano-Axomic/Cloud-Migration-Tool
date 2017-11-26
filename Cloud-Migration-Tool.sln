@@ -5,7 +5,7 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cloud-Migration-Tool", "Cloud-Migration-Tool\Cloud-Migration-Tool.csproj", "{116740EB-E386-4620-AB4F-18BC86354C50}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AsyncFileUploadTesting", "AsyncFileUploadTesting\AsyncFileUploadTesting.csproj", "{82A45D13-7E36-44CE-BB36-64738F3009EE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThreadedFileUploading", "AsyncFileUploadTesting\ThreadedFileUploading.csproj", "{82A45D13-7E36-44CE-BB36-64738F3009EE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
